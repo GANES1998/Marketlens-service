@@ -1,2 +1,2 @@
-GET http://localhost:8080/stock?symbol=AOS&from=2022-10-24&to=2022-10-27
+GET http://localhost:8080/stock?symbol=AOS&from=2022-10-25&to=2022-10-27
 Content-Type: application/json

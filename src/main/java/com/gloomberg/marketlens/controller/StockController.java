@@ -6,10 +6,7 @@ import com.gloomberg.marketlens.repository.StockRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.Date;
 import java.util.List;
@@ -34,6 +31,25 @@ public class StockController {
         List<Stock> stockBetween = stockRepository.getStockBetween(symbol, fromDate, toDate);
 
         log.info("Stock Fetched for [ {} ] between [ {} ] and [ {} ]", symbol, fromDate, toDate);
+
+        return CustomResponse.<List<Stock>>builder()
+                .data(stockBetween)
+                .error(false)
+                .build();
+    }
+
+    @GetMapping(path = "/all", produces = "application/json", consumes = "application/json")
+    public CustomResponse<List<Stock>> getStocks(
+            @RequestParam(name = "from", required = true)
+            @DateTimeFormat(pattern = "yyyy-MM-dd") Date fromDate,
+            @RequestParam(name = "to", required = true)
+            @DateTimeFormat(pattern = "yyyy-MM-dd") Date toDate,
+            @RequestBody List<String> stockSymbols
+    ) {
+
+        List<Stock> stockBetween = stockRepository.getStockBetween("IMB", fromDate, toDate);
+
+        log.info("Stock Fetched for [ {} ] between [ {} ] and [ {} ]", "IBM", fromDate, toDate);
 
         return CustomResponse.<List<Stock>>builder()
                 .data(stockBetween)
