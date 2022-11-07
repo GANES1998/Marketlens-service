@@ -13,28 +13,10 @@ import java.util.Iterator;
 import java.util.List;
 
 @Repository
-public class StockRepository {
+public class StockRepository extends AbstractRepository {
 
     @Autowired
     EntityManager entityManager;
-
-    private void setQueryParams(Query query, Object... params) {
-        List<Object> paramsList = Lists.newArrayList(params);
-
-        Iterator<Object> paramsIterator = paramsList.stream().iterator();
-
-        while (paramsIterator.hasNext()) {
-            String key = paramsIterator.next().toString();
-
-            Object value = null;
-
-            if (paramsIterator.hasNext()) {
-                value = paramsIterator.next();
-            }
-
-            query.setParameter(key, value);
-        }
-    }
 
     public List<Stock> getStockBetween(String symbol, Date from, Date to) {
         Query stockQuery = entityManager.createNativeQuery(
@@ -47,6 +29,16 @@ public class StockRepository {
         List<Stock> resultList = (List<Stock>) stockQuery.getResultList();
 
         return resultList;
+    }
+
+    public List<String> getAllStocks() {
+        Query query = entityManager.createNativeQuery(
+                StockQueries.GET_ALL_STOCK_SYMBOLS
+        );
+
+        List<String> stocks = (List<String>) query.getResultList();
+
+        return stocks;
     }
 
 }

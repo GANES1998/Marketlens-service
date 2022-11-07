@@ -12,7 +12,7 @@ import java.util.Date;
 import java.util.List;
 
 @RestController()
-@RequestMapping(path = "/stock")
+@RequestMapping(path = "/stocks")
 @Slf4j
 public class StockController {
 
@@ -21,12 +21,15 @@ public class StockController {
 
     @GetMapping(path = "", produces = "application/json", consumes = "application/json")
     public CustomResponse<List<Stock>> getStock(
-            @RequestParam(name = "symbol", required = true, defaultValue = "IBM") String symbol,
+            @RequestParam(name = "symbol", required = true)
+            String symbol,
             @RequestParam(name = "from", required = true)
-            @DateTimeFormat(pattern = "yyyy-MM-dd") Date fromDate,
+            @DateTimeFormat(pattern = "yyyy-MM-dd")
+            Date fromDate,
             @RequestParam(name = "to", required = true)
-            @DateTimeFormat(pattern = "yyyy-MM-dd") Date toDate
-            ) {
+            @DateTimeFormat(pattern = "yyyy-MM-dd")
+            Date toDate
+    ) {
 
         List<Stock> stockBetween = stockRepository.getStockBetween(symbol, fromDate, toDate);
 
@@ -38,22 +41,13 @@ public class StockController {
                 .build();
     }
 
-    @GetMapping(path = "/all", produces = "application/json", consumes = "application/json")
-    public CustomResponse<List<Stock>> getStocks(
-            @RequestParam(name = "from", required = true)
-            @DateTimeFormat(pattern = "yyyy-MM-dd") Date fromDate,
-            @RequestParam(name = "to", required = true)
-            @DateTimeFormat(pattern = "yyyy-MM-dd") Date toDate,
-            @RequestBody List<String> stockSymbols
-    ) {
+    @GetMapping(path = "/all")
+    public CustomResponse<List<String>> getStocks() {
 
-        List<Stock> stockBetween = stockRepository.getStockBetween("IMB", fromDate, toDate);
+        List<String> allStocks = stockRepository.getAllStocks();
 
-        log.info("Stock Fetched for [ {} ] between [ {} ] and [ {} ]", "IBM", fromDate, toDate);
-
-        return CustomResponse.<List<Stock>>builder()
-                .data(stockBetween)
-                .error(false)
+        return CustomResponse.<List<String>>builder()
+                .data(allStocks)
                 .build();
     }
 
