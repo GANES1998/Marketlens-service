@@ -5,13 +5,26 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import com.gloomberg.marketlens.entity.id.StockId;
 
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.IdClass;
+import javax.persistence.*;
 import java.util.Date;
 
 @Entity
 @IdClass(StockId.class)
+@SqlResultSetMapping(
+        name="growthResultMapping",
+        classes={
+                @ConstructorResult(
+                        targetClass= GrowthResult.class,
+                        columns={
+                                @ColumnResult(name = "SYMBOL", type = String.class),
+                                @ColumnResult(name="YEAR", type = Integer.class),
+                                @ColumnResult(name="SUB_YEAR", type = Integer.class),
+                                @ColumnResult(name="VALUE", type = Double.class),
+                                @ColumnResult(name="PERCENT", type = Double.class)
+                        }
+                )
+        }
+)
 public class Stock {
 
     @Id

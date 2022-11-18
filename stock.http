@@ -1,2 +1,10 @@
 GET http://localhost:8080/stock?symbol=AOS&from=2022-10-25&to=2022-10-27
 Content-Type: application/json
+
+
+####
+
+GET http://localhost:8080/growth?symbol=stock:AOS,crypto_currency:BTC&from=2020&to=2021&aggBy=MONTH
+Content-Type: application/json
+
+
