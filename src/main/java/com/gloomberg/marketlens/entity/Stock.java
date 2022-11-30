@@ -2,10 +2,10 @@ package com.gloomberg.marketlens.entity;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import com.gloomberg.marketlens.dto.contribution.ContributionResult;
 import com.gloomberg.marketlens.dto.econinfluence.EconInfluenceResult;
 import com.gloomberg.marketlens.dto.news.NewsInfluenceResult;
+import com.gloomberg.marketlens.dto.variance.SectorVarianceResult;
 import com.gloomberg.marketlens.entity.id.StockId;
 
 import javax.persistence.*;
@@ -67,6 +67,21 @@ import java.util.Date;
                                 @ColumnResult(name="YEAR", type = Integer.class),
                                 @ColumnResult(name="SUBYEAR", type = Integer.class),
                                 @ColumnResult(name="VALUE", type = Double.class),
+                        }
+                )
+        }
+)
+@SqlResultSetMapping(
+        name = "SECTOR_VARIANCE_RESULT_SET",
+        classes = {
+                @ConstructorResult(
+                        targetClass = SectorVarianceResult.class,
+                        columns = {
+                                @ColumnResult(name = "SECTOR", type = String.class),
+                                @ColumnResult(name = "YEAR", type = Integer.class),
+                                @ColumnResult(name="SUBYEAR", type = Integer.class),
+                                @ColumnResult(name="VALUE", type = Double.class),
+                                @ColumnResult(name="STD_DEV", type = Double.class),
                         }
                 )
         }
