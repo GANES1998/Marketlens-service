@@ -30,7 +30,11 @@ public class SectorVarianceRepository extends AbstractRepository {
                 StringUtils.upperCase(aggBy)
         );
 
-        Query query = entityManager.createNativeQuery(baseQuery);
+        Query query = entityManager.createNativeQuery(
+                baseQuery,
+                "SECTOR_VARIANCE_RESULT_SET"
+        );
+
         setQueryParams(query, "sectors", sectors, "minYear", minYear, "maxYear", maxYear);
 
         List<SectorVarianceResult> resultList = (List<SectorVarianceResult>) query.getResultList();

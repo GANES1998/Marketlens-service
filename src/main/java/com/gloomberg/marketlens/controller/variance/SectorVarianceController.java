@@ -18,7 +18,7 @@ public class SectorVarianceController {
     @Autowired
     SectorVarianceRepository sectorVarianceRepository;
 
-    @GetMapping(path = "/all")
+    @GetMapping(path = "/result")
     public CustomResponse<List<SectorVarianceResult>> getResult(
         @RequestParam(value = "sectors") List<String> sectors,
         @RequestParam(value = "minYear") int minYear,
