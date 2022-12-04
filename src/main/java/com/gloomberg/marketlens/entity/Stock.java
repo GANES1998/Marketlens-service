@@ -77,7 +77,7 @@ import java.util.Date;
                 @ConstructorResult(
                         targetClass = SectorVarianceResult.class,
                         columns = {
-                                @ColumnResult(name = "SECTOR", type = String.class),
+                                @ColumnResult(name = "SYMBOL", type = String.class),
                                 @ColumnResult(name = "YEAR", type = Integer.class),
                                 @ColumnResult(name="SUBYEAR", type = Integer.class),
                                 @ColumnResult(name="VALUE", type = Double.class),

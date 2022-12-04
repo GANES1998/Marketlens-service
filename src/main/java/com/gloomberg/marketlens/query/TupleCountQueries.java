@@ -19,7 +19,6 @@ public interface TupleCountQueries {
             "COMMODITY",
             "COVID_DATA",
             "TREASURY_BOND",
-            "QUARTERLY_INDICATOR",
             "MONTHLY_INDICATOR",
             "COMPANY",
             "NEWS_EVENTS",
