@@ -13,6 +13,7 @@ public interface TupleCountQueries {
             "STOCK",
             "SECTOR",
             "STOCK_INDEX",
+            "STOCK_SECTOR_MAP",
             "CRYPTO_CURRENCY",
             "COMPANY_SHARES",
             "COMPANY_NAME",
