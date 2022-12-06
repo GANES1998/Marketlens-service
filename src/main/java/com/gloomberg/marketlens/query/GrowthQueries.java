@@ -33,7 +33,7 @@ public interface GrowthQueries {
             "                                                                                SUB_YEAR,\n" +
             "                                                                                LAG(VALUE, 1, 0) OVER ( ORDER BY YEAR, SUB_YEAR) AS PREV_VALUE,\n" +
             "                                                                                VALUE\n" +
-            "                                                                         FROM (SELECT SYMBOL, SECTOR, YEAR, MONTH AS SUB_YEAR, AVG(VALUE) AS VALUE\n" +
+            "                                                                         FROM (SELECT SYMBOL, SECTOR, YEAR, $AGG_PARAM$ AS SUB_YEAR, AVG(VALUE) AS VALUE\n" +
             "                                                                               FROM (SELECT SYMBOL,\n" +
             "                                                                                            STOCK_SECTOR                                 AS SECTOR,\n" +
             "                                                                                            EXTRACT(YEAR FROM DAY)                       AS YEAR,\n" +
@@ -55,7 +55,7 @@ public interface GrowthQueries {
             "                                                                                    SUB_YEAR,\n" +
             "                                                                                    LAG(VALUE, 1, 0) OVER ( ORDER BY YEAR, SUB_YEAR) AS PREV_VALUE,\n" +
             "                                                                                    VALUE\n" +
-            "                                                                             FROM (SELECT SYMBOL, YEAR, MONTH AS SUB_YEAR, AVG(VALUE) AS VALUE\n" +
+            "                                                                             FROM (SELECT SYMBOL, YEAR, $AGG_PARAM$ AS SUB_YEAR, AVG(VALUE) AS VALUE\n" +
             "                                                                                   FROM (SELECT STOCK_INDEX_NAME                             AS SYMBOL,\n" +
             "                                                                                                EXTRACT(YEAR FROM DAY)                       AS YEAR,\n" +
             "                                                                                                EXTRACT(MONTH FROM DAY)                      AS MONTH,\n" +
