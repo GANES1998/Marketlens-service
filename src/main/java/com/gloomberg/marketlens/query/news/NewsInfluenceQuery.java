@@ -7,6 +7,8 @@ public interface NewsInfluenceQuery {
 
     String ALL_NEWS_EVENTS_QUERY = "SELECT * FROM NEWS_EVENTS";
 
+    String NEWS_EVENT_LINKS = "SELECT LINK FROM EVENT_LINKS WHERE EVENT = :event";
+
     String NEWS_INFLUENCE_QUERY = "WITH EVENT_DETAILS AS (SELECT * FROM NEWS_EVENTS WHERE EVENT = :event),\n" +
             "     BASE_TABLE AS (SELECT SYMBOL, SECTOR, YEAR, MONTH, AVG(VALUE) AS VALUE\n" +
             "                    FROM (SELECT SYMBOL,\n" +

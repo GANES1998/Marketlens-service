@@ -17,6 +17,8 @@ public class QueryConfig {
         Map<String, String> resultMap = new HashMap<>();
 
         resultMap.put("STOCK", GrowthQueries.GROWTH_VALUE_STOCK);
+        resultMap.put("SECTOR", GrowthQueries.GROWTH_VALUE_SECTOR);
+        resultMap.put("STOCK_INDEX", GrowthQueries.GROWTH_VALUE_STOCK_INDEX);
         resultMap.put("COMMODITY", GrowthQueries.GROWTH_VALUE_COMMODITY);
         resultMap.put("CRYPTO_CURRENCY", GrowthQueries.GROWTH_VALUE_CRYPTO_CURRENCY);
         resultMap.put("COVID", GrowthQueries.GROWTH_VALUE_COVID);
@@ -24,6 +26,8 @@ public class QueryConfig {
         resultMap.put("TREASURY", GrowthQueries.GROWTH_VALUE_TREASURY);
 
         resultMap.put("STOCKS", GrowthQueries.GROWTH_VALUE_STOCK);
+        resultMap.put("SECTORS", GrowthQueries.GROWTH_VALUE_SECTOR);
+        resultMap.put("STOCKINDICES", GrowthQueries.GROWTH_VALUE_STOCK_INDEX);
         resultMap.put("COMMODITIES", GrowthQueries.GROWTH_VALUE_COMMODITY);
         resultMap.put("CRYPTOS", GrowthQueries.GROWTH_VALUE_CRYPTO_CURRENCY);
         resultMap.put("COVID_DATA", GrowthQueries.GROWTH_VALUE_COVID);

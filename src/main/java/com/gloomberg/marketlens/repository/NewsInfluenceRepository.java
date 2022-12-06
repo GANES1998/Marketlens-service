@@ -42,4 +42,16 @@ public class NewsInfluenceRepository extends AbstractRepository {
         return resultList;
     }
 
+    public List<String> getNewsInfluenceLinks(String event) {
+        Query query = entityManager.createNativeQuery(
+                NewsInfluenceQuery.NEWS_EVENT_LINKS
+        );
+
+        setQueryParams(query, "event", event);
+
+        List<String> resultList = (List<String>) query.getResultList();
+
+        return resultList;
+    }
+
 }

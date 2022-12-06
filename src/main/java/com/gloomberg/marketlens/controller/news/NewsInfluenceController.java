@@ -5,10 +5,7 @@ import com.gloomberg.marketlens.dto.news.NewsInfluenceResult;
 import com.gloomberg.marketlens.entity.NewsEvent;
 import com.gloomberg.marketlens.repository.NewsInfluenceRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -39,6 +36,19 @@ public class NewsInfluenceController {
         return CustomResponse.<List<NewsInfluenceResult>>builder()
                 .data(newsInfluenceResult)
                 .build();
+    }
+
+    @GetMapping(path = "/links")
+    public CustomResponse<List<String>> getNewsInfluenceLinks(
+            @RequestParam("event") String event
+    ) {
+
+        List<String> newsLinks = newsInfluenceRepository.getNewsInfluenceLinks(event);
+
+        return CustomResponse.<List<String>>builder()
+                .data(newsLinks)
+                .build();
+
     }
 
 

@@ -21,6 +21,54 @@ public interface GrowthQueries {
             "                                                                                   ORDER BY SYMBOL, YEAR, SUB_YEAR))\n" +
             "WHERE PREV_VALUE > 0";
 
+    String GROWTH_VALUE_SECTOR = "SELECT SECTOR AS SYMBOL,\n" +
+            "    YEAR,\n" +
+            "    SUB_YEAR,\n" +
+            "    AVG(VALUE) AS VALUE,\n" +
+            "    AVG(PERCENT) AS PERCENT\n" +
+            "FROM (\n" +
+            "    SELECT SYMBOL, SECTOR, YEAR, SUB_YEAR, VALUE, (VALUE - PREV_VALUE) / PREV_VALUE * 100 AS PERCENT FROM (SELECT SYMBOL,\n" +
+            "                                                                                                      SECTOR,\n" +
+            "                                                                                YEAR,\n" +
+            "                                                                                SUB_YEAR,\n" +
+            "                                                                                LAG(VALUE, 1, 0) OVER ( ORDER BY YEAR, SUB_YEAR) AS PREV_VALUE,\n" +
+            "                                                                                VALUE\n" +
+            "                                                                         FROM (SELECT SYMBOL, SECTOR, YEAR, MONTH AS SUB_YEAR, AVG(VALUE) AS VALUE\n" +
+            "                                                                               FROM (SELECT SYMBOL,\n" +
+            "                                                                                            STOCK_SECTOR                                 AS SECTOR,\n" +
+            "                                                                                            EXTRACT(YEAR FROM DAY)                       AS YEAR,\n" +
+            "                                                                                            EXTRACT(MONTH FROM DAY)                      AS MONTH,\n" +
+            "                                                                                            TRUNC((EXTRACT(MONTH FROM DAY) - 1) / 3) + 1 AS QUARTER,\n" +
+            "                                                                                            CLOSE                                        AS VALUE\n" +
+            "                                                                                     FROM STOCK\n" +
+            "                                                                                     WHERE SYMBOL IN (Select DISTINCT SYMBOL FROM STOCK WHERE STOCK_SECTOR = :symbol))\n" +
+            "                                                                               WHERE YEAR >= :minYear\n" +
+            "                                                                                 and YEAR <= :maxYear\n" +
+            "                                                                               GROUP BY SYMBOL, SECTOR, YEAR, $AGG_PARAM$\n" +
+            "                                                                               ORDER BY SYMBOL, SECTOR, YEAR, SUB_YEAR))\n" +
+            "    WHERE PREV_VALUE > 0\n" +
+            ")\n" +
+            "GROUP BY SECTOR, YEAR, SUB_YEAR\n";
+
+    String GROWTH_VALUE_STOCK_INDEX = "SELECT SYMBOL, YEAR, SUB_YEAR, VALUE, (VALUE - PREV_VALUE) / PREV_VALUE * 100 AS PERCENT FROM (SELECT SYMBOL,\n" +
+            "                                                                                    YEAR,\n" +
+            "                                                                                    SUB_YEAR,\n" +
+            "                                                                                    LAG(VALUE, 1, 0) OVER ( ORDER BY YEAR, SUB_YEAR) AS PREV_VALUE,\n" +
+            "                                                                                    VALUE\n" +
+            "                                                                             FROM (SELECT SYMBOL, YEAR, MONTH AS SUB_YEAR, AVG(VALUE) AS VALUE\n" +
+            "                                                                                   FROM (SELECT STOCK_INDEX_NAME                             AS SYMBOL,\n" +
+            "                                                                                                EXTRACT(YEAR FROM DAY)                       AS YEAR,\n" +
+            "                                                                                                EXTRACT(MONTH FROM DAY)                      AS MONTH,\n" +
+            "                                                                                                TRUNC((EXTRACT(MONTH FROM DAY) - 1) / 3) + 1 AS QUARTER,\n" +
+            "                                                                                                CLOSE                                        AS VALUE\n" +
+            "                                                                                         FROM STOCK_INDEX\n" +
+            "                                                                                         WHERE STOCK_INDEX_NAME = :symbol)\n" +
+            "                                                                                   WHERE YEAR >= :minYear\n" +
+            "                                                                                     and YEAR <= :maxYear\n" +
+            "                                                                                   GROUP BY SYMBOL, YEAR, $AGG_PARAM$\n" +
+            "                                                                                   ORDER BY SYMBOL, YEAR, SUB_YEAR))\n" +
+            "WHERE PREV_VALUE > 0";
+
     String GROWTH_VALUE_COMMODITY = "SELECT SYMBOL, YEAR, SUB_YEAR, VALUE, (VALUE - PREV_VALUE) / PREV_VALUE * 100 AS PERCENT\n" +
             "FROM (SELECT SYMBOL,\n" +
             "             YEAR,\n" +
