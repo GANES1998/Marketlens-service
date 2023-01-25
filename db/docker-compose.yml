@@ -1,0 +1,13 @@
+version: '3.1'
+services:
+  db:
+    image: "mysql"
+    environment:
+      MYSQL_DATABASE: MARKET_LENS
+      MYSQL_ROOT_PASSWORD: 'Ganeson123'
+      MYSQL_USER: ganeson
+      MYSQL_PASSWORD: password
+    ports:
+      - "20000:3306"
+    volumes:
+      - "./data:/var/lib/mysql"

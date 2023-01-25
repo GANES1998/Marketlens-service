@@ -7,7 +7,7 @@ public interface Contribution {
             "        SYMBOL,\n" +
             "        EXTRACT(YEAR FROM DAY)                       AS YEAR,\n" +
             "        EXTRACT(MONTH FROM DAY)                      AS MONTH,\n" +
-            "        1 + TRUNC((EXTRACT(MONTH FROM DAY) - 1) / 4) AS QUARTER,\n" +
+            "        1 + (EXTRACT(MONTH FROM DAY) - 1) DIV 4      AS QUARTER,\n" +
             "        CLOSE AS VALUE\n" +
             "    FROM STOCK\n" +
             "    WHERE STOCK_SECTOR = :sector\n" +
@@ -43,7 +43,7 @@ public interface Contribution {
             "            SYMBOL\n" +
             "        FROM SUMED_MCAPS\n" +
             "        ORDER BY MARKET_CAP DESC\n" +
-            "        FETCH FIRST :n ROWS ONLY\n" +
+            "        LIMIT :n\n" +
             "    ),\n" +
             "    RESULT AS (\n" +
             "        SELECT * FROM STOCK_MCAP\n" +
