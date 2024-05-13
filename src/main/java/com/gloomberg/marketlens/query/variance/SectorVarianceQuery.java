@@ -34,7 +34,7 @@ public interface SectorVarianceQuery {
             "                    VALUE,\n" +
             "                    ROW_NUMBER() over (PARTITION BY STOCK_INDEX_NAME ORDER BY YEAR, SUBYEAR) AS ROWNUMBER\n" +
             "                FROM STOCK_GROUPED_RESULT\n" +
-            "          )\n" +
+            "          ) AS SGR \n" +
             "        WHERE ROWNUMBER = 1\n" +
             "    ),\n" +
             "    STOCK_GROWTH_VALUE AS (\n" +
@@ -85,14 +85,15 @@ public interface SectorVarianceQuery {
             "                STD_DEV,\n" +
             "                ROW_NUMBER() over (PARTITION BY SYMBOL ORDER BY YEAR, SUBYEAR) AS ROWNUMBER\n" +
             "            FROM CRYPTO_GROUPED_RESULT\n" +
-            "        ) WHERE ROWNUMBER = 1\n" +
+            "        ) as C WHERE ROWNUMBER = 1\n" +
             "    ),\n" +
             "    CRYPTO_CURRENCY_RESULTS AS (\n" +
             "        SELECT\n" +
             "            CGR.SYMBOL,\n" +
             "            CGR.YEAR,\n" +
             "            CGR.SUBYEAR,\n" +
-            "            (CGR.VALUE - MCGR.VALUE) / MCGR.VALUE * 100 AS VALUE,\n" +
+//            TODO ADDED 1 TO AVOID ZERO DIV ERROR, FIX THIS CORRECTLY
+            "            (CGR.VALUE - MCGR.VALUE) / (1 + MCGR.VALUE) * 100 AS VALUE,\n" +
             "            CGR.STD_DEV AS STD_DEV\n" +
             "            FROM\n" +
             "                     CRYPTO_GROUPED_RESULT CGR JOIN MIN_CRYPTO_GROUPED_RESULT MCGR\n" +
@@ -100,7 +101,7 @@ public interface SectorVarianceQuery {
             "\n" +
             "    ),\n" +
             "    CRYPTO_AGG_RESULTS AS (\n" +
-            "        SELECT (SELECT 'CRYPTO_CURRENCY' FROM DUAL) AS SYMBOL,\n" +
+            "        SELECT 'CRYPTO_CURRENCY' AS SYMBOL,\n" +
             "        YEAR,\n" +
             "        SUBYEAR,\n" +
             "        AVG(VALUE) AS VALUE,\n" +
@@ -110,7 +111,7 @@ public interface SectorVarianceQuery {
             "    )\n" +
             "SELECT * FROM (\n" +
             "    SELECT * FROM STOCK_GROWTH_VALUE UNION SELECT * FROM CRYPTO_AGG_RESULTS\n" +
-            ")\n" +
+            ") as SGVCAR \n" +
             "WHERE SYMBOL in :sectors\n" +
             "ORDER BY SYMBOL, YEAR, SUBYEAR\n" +
             "\n";

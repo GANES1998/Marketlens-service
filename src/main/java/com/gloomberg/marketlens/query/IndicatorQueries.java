@@ -7,6 +7,6 @@ public interface IndicatorQueries {
             "      FROM MONTHLY_INDICATOR\n" +
             "      UNION\n" +
             "      SELECT INDICATOR\n" +
-            "      FROM QUARTERLY_INDICATOR)";
+            "      FROM QUARTERLY_INDICATOR\n) AS INDICATORS";
 
 }

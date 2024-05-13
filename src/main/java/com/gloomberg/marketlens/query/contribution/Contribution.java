@@ -7,7 +7,7 @@ public interface Contribution {
             "        SYMBOL,\n" +
             "        EXTRACT(YEAR FROM DAY)                       AS YEAR,\n" +
             "        EXTRACT(MONTH FROM DAY)                      AS MONTH,\n" +
-            "        1 + (EXTRACT(MONTH FROM DAY) - 1) DIV 4      AS QUARTER,\n" +
+            "        1 + (EXTRACT(MONTH FROM DAY) - 1) / 4      AS QUARTER,\n" +
             "        CLOSE AS VALUE\n" +
             "    FROM STOCK\n" +
             "    WHERE STOCK_SECTOR = :sector\n" +

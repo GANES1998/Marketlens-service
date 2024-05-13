@@ -7,6 +7,7 @@ import org.springframework.stereotype.Repository;
 import javax.persistence.EntityManager;
 import javax.persistence.Query;
 import java.math.BigDecimal;
+import java.math.BigInteger;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
@@ -19,7 +20,7 @@ public class TupleCountsRepository extends AbstractRepository {
     private Long getRowCount(String query) {
         Query nativeQuery = entityManager.createNativeQuery(query);
 
-        return ((BigDecimal) nativeQuery.getSingleResult()).longValue();
+        return ((BigInteger) nativeQuery.getSingleResult()).longValue();
     }
 
     public Map<String, Long> getTupleCounts() {

@@ -41,6 +41,7 @@ public class GrowthRepository extends AbstractRepository {
             if (!StringUtils.equalsIgnoreCase(symbolType, "covid")) {
                 String symbolReplacement = "symbol".concat("" + symbolNumber);
                 baseQuery = baseQuery.replace(":symbol", ":"+symbolReplacement);
+                baseQuery = baseQuery.replaceAll(":aliasSymbol", ""+symbolNumber);
 
                 params.add(symbolReplacement);
                 params.add(symbolValue);
